@@ -12,7 +12,14 @@ from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
 
 # Load NLP model
-nlp = spacy.load("en_core_web_sm")
+import subprocess
+import importlib.util
+
+model_name = "en_core_web_sm"
+if importlib.util.find_spec(model_name) is None:
+    subprocess.run(["python", "-m", "spacy", "download", model_name])
+
+nlp = spacy.load(model_name)
 
 # ================== STREAMLIT CONFIG ==================
 st.set_page_config(page_title="Resume Classifier", layout="wide")
